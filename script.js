@@ -1,15 +1,10 @@
-/*$(document).ready(function(){
-    console.log('El archivo script.js se ha cargado correctamente');
-    $("#botonput").on('click', function(){
-        console.log('hiciste click');
-    });
-});*/
-
 $(document).ready(function() {
     // Definir la URL de la API mock
     var apiUrl = 'https://644dcf304e86e9a4d8ebf173.mockapi.io/';
 
     // función para obtener la lista de perros desde la API
+
+
     function getDogList() {
         $.get(apiUrl + 'dogs', function(response) {
             var $dogList = $('#dog-list');
@@ -22,11 +17,41 @@ $(document).ready(function() {
                 $dogItem.append($('<div>').text('Género: ' + dog.gender));
                 $dogItem.append($('<div>').text('Raza: ' + dog.breed));
                 $dogItem.append($('<div>').text('Descripción: ' + dog.description));
+                $dogItem.append($('<button>').text('Editar').attr('id', 'edit-dog-' + dog.id).on('click', function() {
+                    $.get(apiUrl + 'dogs/' + dog.id, function(dogDetails) {
+                        $('#dog-id').val(dogDetails.id);
+                        $('#dog-name').val(dogDetails.name);
+                        $('#dog-description').val(dogDetails.description);
+                        $('#dog-age').val(dogDetails.age);
+                        $('#dog-gender').val(dogDetails.gender);
+                        $('#dog-breed').val(dogDetails.breed);
+                        $('#dog-image').val(dogDetails.avatar);
+                        $('#edit-mode').prop('checked', true);
+                        $('#save-button').text('Actualizar');
+                    });
+                }));
+                $dogItem.append($('<button>').text('Eliminar').attr('id', 'delete-dog-' + dog.id).on('click', function() {
+                    $.ajax({
+                        url: apiUrl + 'dogs/' + dog.id,
+                        type: 'DELETE',
+                        success: function() {
+                            $dogItem.remove();
+                        }
+                    });
+                }));
                 $dogList.append($dogItem);
             });
-            console.log(response)
+            
+            // Agregar manejador de eventos para el clic en el botón de edición
+            $('button[id^="edit-dog-"]').click(function() {
+                var dogId = $(this).attr('id').split('-')[2];
+                console.log('Editando perro con ID:', dogId);
+                // Aquí puedes hacer lo que necesites para editar el perro con el ID correspondiente
+                // Por ejemplo, podrías cargar los datos del perro en un formulario de edición
+            });
         });
     }
+    
     
 
     // función para enviar datos a la API para crear un nuevo perro
@@ -75,6 +100,7 @@ $(document).ready(function() {
         // enviar los datos a la API
         createDog(data);
     }
+    
     
 
     // manejar el evento del cambio de estado del checkbox
