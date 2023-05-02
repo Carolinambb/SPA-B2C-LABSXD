@@ -1,0 +1,80 @@
+/* Estilos para el título principal */
+h1 {
+    font-size: 3em;
+    text-align: center;
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+  
+  /* Estilos para la lista de perros */
+  #dog-list {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 2em;
+  }
+  
+  #dog-list li {
+    margin-bottom: 1em;
+    border: 1px solid #ccc;
+  border-radius: 10px;
+  }
+  
+  #dog-list li img {
+    height: 100px;
+    width: auto;
+    margin-right: 1em;
+    float: left;
+  }
+  
+  /* Estilos para el formulario de edición */
+  #edit-form {
+    border: 1px solid #ccc;
+    padding: 1em;
+    margin-top: 2em;
+    border-radius: 10px;
+  }
+  
+  #edit-form label {
+    font-weight: bold;
+  }
+  
+  #edit-form .form-control {
+    width: 100%;
+  }
+  
+  #edit-form button {
+    margin-top: 1em;
+  }
+  
+  /* Estilos para el modo editable */
+  #edit-mode {
+    margin-top: 1em;
+  }
+  
+  .dog-details {
+    margin-top: 10px;
+  }
+  
+  .dog-details label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .dog-details p {
+    margin: 0;
+  }
+
+  
+  .edit-button, .delete-button {
+    background-color: #3c8cdc;
+    color: white;
+    border: none;
+    padding: 0.5em;
+    margin-right: 0.5em;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .edit-button:hover, .delete-button:hover {
+    background-color: #579edc;
+  }
+

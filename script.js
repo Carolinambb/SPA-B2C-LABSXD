@@ -15,7 +15,7 @@ $(document).ready(function() {
                 $dogItem.append($('<div>').text('Género: ' + dog.gender));
                 $dogItem.append($('<div>').text('Raza: ' + dog.breed));
                 $dogItem.append($('<div>').text('Descripción: ' + dog.description));
-                $dogItem.append($('<button>').text('Editar').attr('id', 'edit-dog-' + dog.id).on('click', function() {
+                $dogItem.append($('<button>').text('Editar').addClass('edit-button').attr('id', 'edit-dog-' + dog.id).on('click', function() {
                     console.log(dog.id)
                     $.get(apiUrl + 'dogs/' + dog.id, function(dogDetails) {
                         $('#dog-id').val(dogDetails.id);
@@ -29,7 +29,7 @@ $(document).ready(function() {
                         $('#save-button').text('Actualizar');
                     });
                 }));
-                $dogItem.append($('<button>').text('Eliminar').attr('id', 'delete-dog-' + dog.id).on('click', function() {
+                $dogItem.append($('<button>').text('Eliminar').addClass('delete-button').attr('id', 'delete-dog-' + dog.id).on('click', function() {
                     $.ajax({
                         url: apiUrl + 'dogs/' + dog.id,
                         type: 'DELETE',
@@ -45,9 +45,7 @@ $(document).ready(function() {
             // Agregar manejador de eventos para el clic en el botón de edición
             $('button[id^="edit-dog-"]').click(function() {
                 var dogId = $(this).attr('id').split('-')[2];
-                console.log('Editando perro con ID:', dogId);
-                // Aquí puedes hacer lo que necesites para editar el perro con el ID correspondiente
-                // Por ejemplo, podrías cargar los datos del perro en un formulario de edición
+                console.log('Editando perro con ID:', dogId);        
             });
         });
     }
@@ -76,39 +74,6 @@ $(document).ready(function() {
         });
     }
     
-    
-    /*function updateDog(data, dogId) {
-        console.log(dogId);
-        $.ajax({
-            type: 'PUT',
-            url: apiUrl + 'dogs/' + dogId,
-            contentType: 'application/json',
-            data: JSON.stringify(data)
-        })
-        .done(function(response) {
-            console.log('Respuesta del servidor SUCCESS › ', response);
-            loadDogs(); // Cargar la lista actualizada de perros
-          })/*(function(response) {
-            console.log('Respuesta del servidor SUCCESS › ', response);
-            // actualizar la lista de perros en la página
-            var $dogList = $('#dog-list');
-            var $updatedDogItem = $dogList.find('#dog-' + response.id);
-            $updatedDogItem.html('<strong>Nombre:</strong> ' + response.name + '<br><strong>Edad:</strong> ' + response.age + '<br><strong>Género:</strong> ' + response.gender + '<br><strong>Raza:</strong> ' + response.breed + '<br><strong>Descripción:</strong> ' + response.description + '<br><img src="' + response.avatar + '" class="avatar">');
-        
-            // actualizar la carta del perro en la página
-            var $dogCard = $('#dog-card');
-            if ($dogCard.data('dog-id') === response.id) {
-                $dogCard.find('.card-title').text(response.name);
-                $dogCard.find('.card-subtitle').text(response.breed);
-                $dogCard.find('.card-text').text(response.description);
-                $dogCard.find('.card-img-top').attr('src', response.avatar);
-            }
-        })
-        
-        .fail(function(error) {
-            console.log('Respuesta del servidor FAIL › ', error);
-        });
-    }*/
 
     function updateDog(data, dogId) {
         console.log(dogId)
@@ -140,7 +105,6 @@ $(document).ready(function() {
             console.log('Respuesta del servidor FAIL › ', error);
         });
     }
-    
     
     
 
@@ -187,35 +151,6 @@ $(document).ready(function() {
         $form.find('#id').val(dogId); // <-- Aquí se debe asignar el dogId al campo id
         showModal('form-modal');
     }
-    
-    
-
-    // función para manejar la acción del botón de guardar
-    /*function handleSaveButton() {
-        var dogName = $('#dog-name').val();
-        var dogDescription = $('#dog-description').val();
-        var dogAge = $('#dog-age').val();
-        var dogGender = $('#dog-gender').val();
-        var dogBreed = $('#dog-breed').val();
-        var dogImage = $('#dog-image').val();
-        var isEditMode = $('#edit-mode').prop('checked');
-        var dogId = $('#dog-id').val();
-    
-        var data = {
-            name: dogName,
-            description: dogDescription,
-            age: dogAge,
-            gender: dogGender,
-            breed: dogBreed,
-            avatar: dogImage
-        };
-    
-        if (isEditMode) {
-            updateDog(data, dogId);
-        } else {
-            createDog(data);
-        }
-    }*/
 
     function resetForm() {
         $('#dog-name').val('');
@@ -246,9 +181,32 @@ $(document).ready(function() {
         $('#save-button').text('Crear');
         $('#edit-mode').prop('checked', false);
     }
-    
-    
-    
+    var $nameInput = $('#dog-name');
+  var $descriptionInput = $('#dog-description');
+  var $ageInput = $('#dog-age');
+  var $genderInput = $('#dog-gender');
+  var $breedInput = $('#dog-breed');
+
+  // Obtener los botones del formulario
+  var $saveButton = $('#save-button');
+  var $resetButton = $('#reset-button');
+
+  // Deshabilitar los botones si los campos del formulario están vacíos
+  function toggleButtons() {
+    var disabled = ($nameInput.val() === '' || $descriptionInput.val() === '' || $ageInput.val() === '' || $genderInput.val() === '' || $breedInput.val() === '');
+    $saveButton.prop('disabled', disabled);
+    $resetButton.prop('disabled', disabled);
+  }
+
+  // Vincular el evento keyup a los campos del formulario
+  $nameInput.on('keyup', toggleButtons);
+  $descriptionInput.on('keyup', toggleButtons);
+  $ageInput.on('keyup', toggleButtons);
+  $genderInput.on('keyup', toggleButtons);
+  $breedInput.on('keyup', toggleButtons);
+
+  // Deshabilitar los botones al cargar la página
+  toggleButtons();
 
     // manejar el evento del cambio de estado del checkbox
     $('#edit-mode').change(function() {

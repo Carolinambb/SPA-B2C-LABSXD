@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Mi SPA con jQuery y Bootstrap - B2C</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
@@ -11,49 +12,51 @@
         <div class="row">
             <div class="col-md-6">
                 <h2>Lista de perros</h2>
-                <ul id="dog-list"></ul>
-              
-
-            </div>
-            <div class="col-md-6">
-                <h2>Editar perro</h2>
-                <div id="edit-form">
-                    <input type="hidden" name="dog-id" id="dog-id">
-                  <div class="form-group">
-                      <label for="dog-name">Nombre:</label>
-                      <input type="text" class="form-control" id="dog-name">
-                  </div>
-                  <div class="form-group">
-                      <label for="dog-age">Edad:</label>
-                      <input type="text" class="form-control" id="dog-age">
-                  </div>
-                  <div class="form-group">
-                      <label for="dog-gender">Género:</label>
-                      <input type="text" class="form-control" id="dog-gender">
-                  </div>
-                  <div class="form-group">
-                      <label for="dog-breed">Raza:</label>
-                      <input type="text" class="form-control" id="dog-breed">
-                  </div>
-                  <div class="form-group">
-                      <label for="dog-description">Descripción:</label>
-                      <input type="text" class="form-control" id="dog-description">
-                  </div>
-                  <div class="form-group">
-                    <label for="dog-image">Imagen:</label>
-                    <input type="text" class="form-control" id="dog-image">
-                </div>
-
-                    <button id="save-button" class="btn btn-primary">Guardar</button>
+                <div id="dog-list-container">
+                    <ul id="dog-list">
+                        <li>Perro 1</li>
+                        <li>Perro 2</li>
+                        <li>Perro 3</li>
+                    </ul>
                 </div>
             </div>
-        </div>
-        <div class="row">
             <div class="col-md-6">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" id="edit-mode"> Modo editable
-                    </label>
+                <div class="edit-container">
+                    <h2>Editar perro</h2>
+                    <div id="edit-form">
+                        <input type="hidden" name="dog-id" id="dog-id">
+                      <div class="form-group">
+                          <label for="dog-name">Nombre:</label>
+                          <input type="text" class="form-control" id="dog-name">
+                      </div>
+                      <div class="form-group">
+                          <label for="dog-age">Edad:</label>
+                          <input type="text" class="form-control" id="dog-age">
+                      </div>
+                      <div class="form-group">
+                          <label for="dog-gender">Género:</label>
+                          <input type="text" class="form-control" id="dog-gender">
+                      </div>
+                      <div class="form-group">
+                          <label for="dog-breed">Raza:</label>
+                          <input type="text" class="form-control" id="dog-breed">
+                      </div>
+                      <div class="form-group">
+                          <label for="dog-description">Descripción:</label>
+                          <input type="text" class="form-control" id="dog-description">
+                      </div>
+                      <div class="form-group">
+                        <label for="dog-image">Imagen:</label>
+                        <input type="text" class="form-control" id="dog-image">
+                    </div>
+
+                        <button type="submit" disabled id="save-button" class="btn btn-primary">Guardar</button>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="edit-mode"> Modo editable
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -61,7 +64,5 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="script.js"></script>
-
-
 </body>
 </html>
