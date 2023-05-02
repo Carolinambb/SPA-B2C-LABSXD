@@ -51,30 +51,7 @@ $(document).ready(function() {
     }
     
   
-      
-    function loadDogs() {
-        $.get(apiUrl + 'dogs', function(response) {
-            var $dogList = $('#dog-list');
-            $dogList.empty();
-            $.each(response, function(index, dog) {
-                var $dogItem = $('<div>').attr('id', 'dog-' + dog.id);
-                $dogItem.html('<strong>Nombre:</strong> ' + dog.name + '<br><strong>Edad:</strong> ' + dog.age + '<br><strong>Género:</strong> ' + dog.gender + '<br><strong>Raza:</strong> ' + dog.breed + '<br><strong>Descripción:</strong> ' + dog.description + '<br><img src="' + dog.avatar + '" class="avatar">');
-                var $editButton = $('<button>').text('Editar').click(function() {
-                    editDog(dog.id);
-                });
-                var $deleteButton = $('<button>').text('Borrar').click(function() {
-                    deleteDog(dog.id);
-                });
-                $dogItem.append($editButton).append($deleteButton);
-                $dogList.append($dogItem);
-            });
-        })
-        .fail(function(error) {
-            console.log('Respuesta del servidor FAIL › ', error);
-        });
-    }
     
-
     function updateDog(data, dogId) {
         console.log(dogId)
         $.ajax({
@@ -85,7 +62,8 @@ $(document).ready(function() {
         })
         .done(function(response) {
             console.log('Respuesta del servidor SUCCESS › ', response);
-            loadDogs();
+            getDogList();
+           
         })
         .fail(function(error) {
             console.log('Respuesta del servidor FAIL › ', error);
@@ -99,7 +77,8 @@ $(document).ready(function() {
         })
         .done(function(response) {
             console.log('Respuesta del servidor SUCCESS › ', response);
-            loadDogs();
+            getDogList();
+            
         })
         .fail(function(error) {
             console.log('Respuesta del servidor FAIL › ', error);
