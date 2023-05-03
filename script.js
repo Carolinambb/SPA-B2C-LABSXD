@@ -29,6 +29,7 @@ $(document).ready(function() {
                         $('#save-button').text('Actualizar');
                     });
                 }));
+                
                 $dogItem.append($('<button>').text('Eliminar').addClass('delete-button').attr('id', 'delete-dog-' + dog.id).on('click', function() {
                     $.ajax({
                         url: apiUrl + 'dogs/' + dog.id,
@@ -43,14 +44,12 @@ $(document).ready(function() {
             
             
             // Agregar manejador de eventos para el clic en el botón de edición
-            $('button[id^="edit-dog-"]').click(function() {
+            $('#dog-list').on('click', '.edit-button', function() {
                 var dogId = $(this).attr('id').split('-')[2];
                 console.log('Editando perro con ID:', dogId);        
             });
         });
-    }
-    
-  
+    };
     
     function updateDog(data, dogId) {
         console.log(dogId)
@@ -88,7 +87,6 @@ $(document).ready(function() {
     
 
     // función para enviar datos a la API para crear un nuevo perro
-    
     function createDog(data) {
         $.ajax({
             type: 'POST',
@@ -99,16 +97,13 @@ $(document).ready(function() {
         .done(function(response) {
             console.log('Respuesta del servidor SUCCESS › ', response);
             // actualizar la lista de perros en la página
-            var $dogList = $('#dog-list');
-            var $newDogItem = $('<li>').html('<strong>Nombre:</strong> ' + response.name + '<br><strong>Edad:</strong> ' + response.age + '<br><strong>Género:</strong> ' + response.gender + '<br><strong>Raza:</strong> ' + response.breed + '<br><strong>Descripción:</strong> ' + response.description + '<br><img src="' + response.avatar + '" class="avatar">');
-
-            $newDogItem.append($('<img>').attr('src', response.avatar).addClass('avatar')); // Agregado
-            $dogList.append($newDogItem);
+            getDogList(); //cuando lo llamo aparecen los botones
         })
         .fail(function(error) {
             console.log('Respuesta del servidor FAIL › ', error);
         });
     }
+    
     
     
     function handleEditButton(event) {
@@ -117,6 +112,7 @@ $(document).ready(function() {
         var dogId = $dogItem.attr('id').replace('dog-', '');
         showDogForm(dogId); // <-- Aquí se debe estar pasando el dogId correctamente
     }
+    //para la info en el form
     
     function showDogForm(dogId) {
         var $form = $('#dog-form');
@@ -131,6 +127,7 @@ $(document).ready(function() {
         showModal('form-modal');
     }
 
+    //para que se limpie el form 
     function resetForm() {
         $('#dog-name').val('');
         $('#dog-age').val('');
